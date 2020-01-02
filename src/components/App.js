@@ -7,12 +7,19 @@ import Logo from './Logo';
 class App extends React.Component{
     state = {images : []}; 
 
-    onSearchSubmit = async (term) => {
-        const response = await unsplash.get('/search/photos', {
-            params: {query : term }
-        }); 
-        this.setState({images: response.data.results});
-    }
+    // onSearchSubmit = async (term) => {
+    //     const response = await unsplash.get('/search/photos', {
+    //         params: {query : term }
+    //     }); 
+    //     this.setState({images: response.data.results});
+    // }
+
+    async onSearchSubmit (term) {
+        const response  = await unsplash.get('/search/photos', {
+                    params: {query : term }
+                }); 
+                this.setState({images: response.data.results});
+            }
     //this uses Axios to send a request to the Unsplash API -> 
     //returns a JSON back to the React project
  
@@ -23,7 +30,7 @@ class App extends React.Component{
                 <Logo />
             </div>
             <div className="ui container" style={{marginTop: '20px'}}>
-                <SearchBar onSubmission={this.onSearchSubmit}/>
+                <SearchBar onSubmission={(term)=>this.onSearchSubmit(term)}/>
                 <ImageList images={this.state.images} />
             </div>
         </div>
